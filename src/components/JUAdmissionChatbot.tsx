@@ -466,7 +466,7 @@ const JUAdmissionChatbot = () => {
       <div className="fixed bottom-6 right-6 z-50">
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-green-600 hover:bg-green-700 text-white rounded-full p-4 transition-all duration-300 hover:scale-110 relative cursor-pointer shadow-xl"
+          className="bg-orange-500 hover:bg-green-700 text-white rounded-full p-4 transition-all duration-300 hover:scale-110 relative cursor-pointer shadow-xl"
         >
           <MessageCircle className="w-6 h-6" />
           <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-400 rounded-full border-2 border-white"></div>

@@ -157,7 +157,7 @@ const ChatbotFeaturesSection = () => {
                         <div className="grid grid-cols-2 gap-2 animate-fadeIn">
                           {feature.benefits.map((benefit, idx) => (
                             <div key={idx} className="flex items-center space-x-2">
-                              <CheckCircle className="w-4 h-4 text-green-500" />
+                              <CheckCircle className="w-4 h-4 text-orange-500" />
                               <span className="text-sm text-gray-700">{benefit}</span>
                             </div>
                           ))}
