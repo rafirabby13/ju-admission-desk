@@ -1,17 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import type { FeedbackCardProps } from "../components/Feedbackcard";
 
-export const useGetAlFeedback = () => {
+export const useGetAllcategories = () => {
     const frontendUrl = import.meta.env.VITE_BACKEND_URL;
 
     if (!frontendUrl) {
         throw new Error("VITE_FRONTEND_URL is not defined in .env");
     }
-    const { isPending, error, data, refetch } = useQuery<FeedbackCardProps['feedback'][]>({
-        queryKey: ['feedback'],
+    const { isPending, error, data, refetch } = useQuery({
+        queryKey: ['categories'],
         queryFn: async () => {
-            const res = await axios.get(`${frontendUrl}/feedback`, { withCredentials: true })
+            const res = await axios.get(`${frontendUrl}/admin/categories`, { withCredentials: true })
             return res.data
         },
         initialData: []

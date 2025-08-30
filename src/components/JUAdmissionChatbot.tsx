@@ -1,156 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Bot, User, MessageCircle, X, Minimize2, Maximize2, School, DollarSign, FileText, Building } from 'lucide-react';
+import { Send, Bot, User, MessageCircle, X, Minimize2, Maximize2, School, DollarSign, FileText, Building, Mic, AudioLines } from 'lucide-react';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import SpeechToText from 'speech-to-text';
+import { useGetAlllQAns } from '../hooks/useGetQ&APair';
 
-const juAdmissionFaqData = {
-  admissionRequirements: {
-    general: {
-      "What are the general admission requirements for JU undergraduate programs?": "To apply for undergraduate programs at JU, you must have successfully completed your Higher Secondary Certificate (HSC) or equivalent exams. Your GPA should meet the minimum requirement set by the specific faculty.",
-      "Do I need to pass an admission test?": "Yes, JU requires eligible candidates to pass the university admission test for most undergraduate programs. Some programs may also consider SSC and HSC results for initial screening.",
-      "Can students from other boards apply?": "Absolutely! Students from all recognized boards in Bangladesh can apply, provided they meet the GPA and subject requirements.",
-      "Are there special requirements for Science faculty?": "Yes, Science faculty applicants must have Mathematics and Physics at HSC level, and Chemistry or Biology depending on the department.",
-      "Are Arts faculty applicants required to have specific subjects?": "Yes, Arts faculty applicants need relevant humanities subjects at HSC level, such as History, English, or Bangla.",
-      "Can students with vocational education apply?": "Some programs may allow vocational students if they meet the GPA and subject criteria. Check the faculty-specific rules.",
-      "Is prior admission experience necessary?": "No, first-time applicants can apply without prior experience.",
-      "Can transfer students apply?": "Transfer students may apply, but they need to provide transcripts and approval from their current institution.",
-      "Are there any age limits?": "Generally, there is no strict age limit for undergraduate admissions.",
-      "Can international students apply?": "Currently, this guide focuses on Bangladeshi students. International admissions are handled separately."
-    }
-  },
-  
-  eligibilityDetails: {
-    gpaRequirements: {
-      "What is the minimum GPA required for JU admission?": "Typically, JU requires a minimum combined GPA of 7.0 in SSC and HSC, but this varies by faculty.",
-      "Is there a minimum GPA per subject?": "Some departments require minimum grades in key subjects like Math, Physics, or Chemistry.",
-      "Are students from all recognized Bangladeshi boards eligible?": "Yes, all recognized boards are eligible as long as GPA requirements are met.",
-      "Can students apply if they have retaken exams?": "Yes, JU considers the latest official results.",
-      "Are vocational students considered?": "Vocational students may apply to specific programs that accept them.",
-      "Do students need English proficiency?": "For most programs, HSC English is sufficient. Some faculties may require additional English skills.",
-      "Can students with disabilities apply?": "Yes, JU encourages applications from students with disabilities.",
-      "Is work experience required?": "No work experience is required for undergraduate programs.",
-      "Can students apply for multiple faculties?": "Students may apply to multiple faculties if eligible for each.",
-      "Are there reserved seats for specific groups?": "JU may have quota systems; check official notices for details."
-    }
-  },
-  
-  admissionTest: {
-    testDetails: {
-      "When does the application period usually start?": "Applications generally open in June; exact dates are posted on the JU website.",
-      "When is the admission test conducted?": "Typically in July; check the official notice for specific dates.",
-      "What is the format of the admission test?": "It usually consists of multiple-choice and written questions based on HSC subjects.",
-      "How long is the test?": "The test duration varies by faculty, usually 1.5–2 hours.",
-      "Can I retake the test if I fail?": "No, you must apply again next year.",
-      "Is there a negative marking?": "Some faculties apply negative marking; refer to the official admission notice.",
-      "Are admit cards required?": "Yes, candidates must download and bring their admit cards.",
-      "Can I take the test in another city?": "Admission tests are held at JU; remote tests are not available.",
-      "What happens if I miss the test?": "You will have to wait for the next admission cycle.",
-      "Can I check my result online?": "Yes, results are posted on the JU official website."
-    }
-  },
-  
-  fees: {
-    tuitionFees: {
-      "How much is the tuition fee for undergraduate programs?": "Fees range from BDT 10,000 to 30,000 per year depending on faculty.",
-      "Are there additional charges?": "Yes, for registration, ID cards, library, lab, and hostel facilities.",
-      "How can I pay the tuition fee?": "Fees can be paid online or at designated banks; follow the official instructions.",
-      "Are there semester-wise payments?": "Yes, most faculties allow semester-wise fee payments.",
-      "Are tuition waivers available?": "Merit-based waivers are available for top-performing students.",
-      "Can I pay by installments?": "Some faculties allow installment payments; check official guidance.",
-      "Is there a late payment penalty?": "Yes, late payments may incur fines.",
-      "Are lab fees included in tuition?": "Lab fees are often separate.",
-      "Does tuition cover textbooks?": "No, textbooks are generally the student's responsibility.",
-      "Are there scholarships for low-income students?": "Yes, need-based scholarships are available."
-    }
-  },
-  
-  scholarships: {
-    financialAid: {
-      "Are scholarships offered?": "Yes, merit-based and need-based scholarships.",
-      "How to apply for scholarships?": "Applications are usually submitted with admission or separately online.",
-      "Are there government scholarships?": "Yes, eligible students can apply.",
-      "Can I receive multiple scholarships?": "Some scholarships can be combined; check eligibility.",
-      "Is financial aid based on family income?": "Yes, need-based aid considers family income.",
-      "Are fee waivers available for top performers?": "Yes, top-ranking students may get partial fee waivers.",
-      "Are book allowances included?": "Some scholarships provide extra funds for books.",
-      "How long is a scholarship valid?": "Usually one academic year; renewals depend on performance.",
-      "Can scholarships be deferred?": "Typically no; check scholarship rules."
-    }
-  },
-  
-  hostel: {
-    accommodation: {
-      "Does JU provide hostel facilities?": "Yes, for both male and female students.",
-      "How much is hostel rent?": "Typically BDT 2,000–5,000 per semester.",
-      "Can I apply for hostel after admission?": "Yes, application is separate after admission.",
-      "Are meals provided?": "Some hostels provide canteens; meals are usually separate.",
-      "Can I stay off-campus?": "Yes, students may arrange private accommodations.",
-      "Are hostel rooms shared?": "Usually 2–4 students per room.",
-      "Is electricity and water available?": "Yes, hostels provide basic utilities.",
-      "Are there security measures?": "Yes, campus and hostels have security personnel.",
-      "Can parents visit?": "Visitors are allowed during specific hours.",
-      "How to apply for hostel transfer?": "Requests can be submitted to the hostel office with valid reasons."
-    }
-  },
-  
-  documents: {
-    requiredDocuments: {
-      "What documents are required for admission?": "SSC/HSC mark sheets, certificates, recent photos, birth certificate, and printed application form.",
-      "Are originals needed?": "Originals must be shown at the time of admission confirmation.",
-      "Can I submit scanned copies online?": "Online application may accept scanned copies; check instructions.",
-      "Are character certificates needed?": "Some faculties may request them.",
-      "Do I need a medical certificate?": "Certain programs may require a health certificate.",
-      "Can I submit extra documents?": "Yes, if requested or beneficial for application.",
-      "Are passport copies required?": "Not for Bangladeshi students, only for international applicants.",
-      "Are recommendation letters required?": "Generally not for undergraduate programs.",
-      "How many photos are needed?": "Usually 2–4 recent passport-sized photographs.",
-      "Do I need to submit HSC and SSC transcripts?": "Yes, both mark sheets and certificates are required."
-    }
-  },
-  
-  transportation: {
-    campusAccess: {
-      "How do I reach JU from Dhaka?": "By bus, private vehicle, taxi, or auto-rickshaw. Travel time approx. 1–1.5 hours.",
-      "Are there direct buses to JU?": "Yes, multiple buses run daily to Savar.",
-      "Is there parking on campus?": "Yes, limited parking is available for students and staff.",
-      "Can I cycle to JU?": "Yes, the campus has bicycle paths.",
-      "Is there a shuttle service?": "Not officially; private transport is common.",
-      "How to get from bus stop to main gate?": "Auto-rickshaws and local transport are available.",
-      "Are there nearby train stations?": "No train directly to JU; buses are preferred.",
-      "Is ride-sharing available?": "Yes, apps like Pathao and Uber operate near Savar.",
-      "Can I walk from nearby areas?": "Some local areas are within walking distance.",
-      "How to reach from airport?": "Taxi or ride-share is recommended; approx. 1 hour from Dhaka Airport."
-    }
-  },
-  
-  campusFacilities: {
-    facilities: {
-      "Does JU have a central library?": "Yes, with books, journals, and digital resources.",
-      "Are sports facilities available?": "Yes, including cricket, football, basketball, and indoor games.",
-      "Is there Wi-Fi on campus?": "Yes, in hostels, libraries, and academic buildings.",
-      "Are cafeterias available?": "Yes, multiple food outlets are on campus.",
-      "Is there a medical center?": "Yes, a campus health center is available.",
-      "Are labs well-equipped?": "Science and engineering labs have modern equipment.",
-      "Can I access computer labs?": "Yes, for academic purposes.",
-      "Are there auditoriums?": "Yes, for seminars, lectures, and events.",
-      "Are cultural centers available?": "Yes, including Selim Al Deen Muktamanch for performances.",
-      "Are there student clubs?": "Yes, various clubs for cultural, academic, and sports activities."
-    }
-  },
-  
-  contact: {
-    helpdesk: {
-      "How to contact the admission office?": "Official website, phone +880-2-7791040, email admission@juniv.edu.",
-      "Is online support available?": "Yes, during the admission period.",
-      "Can I get help for hostel queries?": "Yes, the hostel office provides assistance.",
-      "Who can help with transport questions?": "The transport office and helpdesk provide guidance.",
-      "Can I visit the admission office in person?": "Yes, during office hours.",
-      "Are social media channels used?": "Official JU Facebook and website updates provide info.",
-      "Can I contact faculty for program-specific queries?": "Yes, emails and department contact details are available online.",
-      "Are there helpline numbers for urgent queries?": "Yes, listed on the official website during admission period.",
-      "Is there an FAQ page on the JU website?": "Yes, for common admission questions.",
-      "Can I subscribe to JU updates?": "Yes, via the official website newsletter and social media channels."
-    }
-  }
-};
+
 
 interface Message {
   id: string;
@@ -296,6 +153,76 @@ const getIntentFromInput = (raw: string): Intent | null => {
   return null;
 };
 
+
+
+const JUAdmissionChatbot = () => {
+  const [interimText, setInterimText] = useState<string>(''); // interim speech text
+  const [finalisedText, setFinalisedText] = useState<string[]>([]); // array of finalised speech text
+  const [listening, setListening] = useState<boolean>(false); // whether listening or not
+  const [error, setError] = useState<string | null>(null); // error messages
+  const [listener, setListener] = useState<SpeechToText | null>(null);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: '1',
+      text: "Welcome to Jahangirnagar University Admission Assistant. I can help you with admission requirements, eligibility, fees, scholarships, documents, and campus information. How can I assist you today?",
+      sender: 'bot',
+      timestamp: new Date(),
+      options: ['🎓 Admission Requirements', '💰 Fees & Scholarships', '📄 Documents Needed', '🏫 Campus Info']
+    }
+  ]);
+
+  const [inputText, setInputText] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [isIdentified, setIsIdentified] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { data: qa, isPending } = useGetAlllQAns()
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+  useEffect(() => {
+    const onAnythingSaid = (text: string) => {
+      setInputText(text);
+      setInterimText(text);
+    };
+
+    const onEndEvent = () => {
+      if (listening) {
+        listener?.startListening();
+      }
+    };
+
+    const onFinalised = (text: string) => {
+      setFinalisedText((prev) => [text, ...prev]);
+      setInterimText("");
+      setInputText(text);
+    };
+
+    try {
+      const speechListener = new SpeechToText(onFinalised, onEndEvent, onAnythingSaid);
+      setListener(speechListener);
+    } catch (err: any) {
+      setError(err.message);
+    }
+
+    // Cleanup function
+    return () => {
+      listener?.stopListening();
+    };
+  }, [listening]);
+  if (isPending) {
+    return "laoding........."
+  }
+
+  const { qaPairs } = qa
+  console.log(qaPairs)
+
+  const juAdmissionFaqData = {
+    qaPairs
+
+  };
+
 const findBestMatch = (userInput: string): string => {
   const normInput = normalize(userInput);
   const inputTokens = normInput.split(' ').filter(Boolean);
@@ -327,28 +254,18 @@ const findBestMatch = (userInput: string): string => {
   return bestScore >= 2 ? bestAnswer : '';
 };
 
-const JUAdmissionChatbot = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      text: "Welcome to Jahangirnagar University Admission Assistant. I can help you with admission requirements, eligibility, fees, scholarships, documents, and campus information. How can I assist you today?",
-      sender: 'bot',
-      timestamp: new Date(),
-      options: ['🎓 Admission Requirements', '💰 Fees & Scholarships', '📄 Documents Needed', '🏫 Campus Info']
+  const toggleListening = () => {
+    if (!listener) return;
+    if (listening) {
+      listener.stopListening();
+      setListening(false);
+    } else {
+      listener.startListening();
+      setListening(true);
     }
-  ]);
-
-  const [inputText, setInputText] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
-  const [userName, setUserName] = useState('');
-  const [isIdentified, setIsIdentified] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
+  };
   const scrollToBottom = () => messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+
 
   const generateBotResponse = (userInput: string): Message => {
     const input = userInput.toLowerCase();
@@ -400,7 +317,7 @@ const JUAdmissionChatbot = () => {
         const faqMatch = findBestMatch(userInput);
         if (faqMatch) {
           responseText = faqMatch + '\n\n📞 **Need more help?** Call +880-2-7791040 or email admission@juniv.edu';
-          
+
           if (faqMatch.includes('fee') || faqMatch.includes('tuition') || faqMatch.includes('scholarship')) {
             options = ['Fee details', 'Scholarships', 'Payment methods', 'Contact office'];
           } else if (faqMatch.includes('document') || faqMatch.includes('certificate') || faqMatch.includes('photo')) {
@@ -475,6 +392,22 @@ const JUAdmissionChatbot = () => {
     );
   }
 
+
+
+  const handleSendVoice = () => {
+    if (!listener) return;
+
+    if (listening) {
+      // Stop listening
+      listener.stopListening();
+      setListening(false);
+    } else {
+      // Start listening
+      listener.startListening();
+      setListening(true);
+    }
+  };
+
   return (
     <div className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${isMinimized ? 'w-80 h-16' : 'w-96 h-[600px]'}`}>
       <div className="bg-blue-600 rounded-lg shadow-2xl border border-blue-700 h-full flex flex-col">
@@ -509,16 +442,14 @@ const JUAdmissionChatbot = () => {
                   <div className={`max-w-[85%] ${message.sender === 'user' ? 'order-2' : 'order-1'}`}>
                     <div className={`flex items-start gap-3 ${message.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
                       <div
-                        className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                          message.sender === 'user' ? 'bg-blue-600' : 'bg-gradient-to-br from-green-500 to-green-600'
-                        }`}
+                        className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${message.sender === 'user' ? 'bg-blue-600' : 'bg-gradient-to-br from-green-500 to-green-600'
+                          }`}
                       >
                         {message.sender === 'user' ? <User className="w-4 h-4 text-white" /> : <Bot className="w-4 h-4 text-white" />}
                       </div>
                       <div
-                        className={`rounded-2xl p-3 shadow-sm ${
-                          message.sender === 'user' ? 'bg-blue-600 text-white' : 'bg-white text-gray-800 border border-gray-200'
-                        }`}
+                        className={`rounded-2xl p-3 shadow-sm ${message.sender === 'user' ? 'bg-blue-600 text-white' : 'bg-white text-gray-800 border border-gray-200'
+                          }`}
                       >
                         <p className="text-sm whitespace-pre-line leading-relaxed">{message.text}</p>
                         {message.options && (
@@ -577,6 +508,15 @@ const JUAdmissionChatbot = () => {
                   placeholder={`Ask me about JU admission...${!isIdentified ? ' (Tell me your name!)' : ''}`}
                   className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
                 />
+                <button
+                  onClick={() => handleSendVoice()}
+                  className="bg-green-600 text-white p-2 rounded-lg hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                >
+                  {
+                    listening ? <AudioLines className="w-4 h-4" /> : <Mic className="w-4 h-4" />
+                  }
+
+                </button>
                 <button
                   onClick={() => handleSendMessage()}
                   disabled={!inputText.trim()}

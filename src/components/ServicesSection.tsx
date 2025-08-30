@@ -13,6 +13,7 @@ import {
   MessageSquare,
   Lightbulb
 } from 'lucide-react';
+import { Link } from 'react-router';
 
 const ServicesSection = () => {
   const [, setActiveService] = useState(0);
@@ -250,11 +251,11 @@ const ServicesSection = () => {
             Join hundreds of successful students who have achieved their admission goals with our comprehensive support system.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="group inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+            <Link to={"/ask-ai"} className="group inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
               <MessageSquare className="w-5 h-5 mr-2" />
               Start Free Consultation
               <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
-            </button>
+            </Link>
             <button className="inline-flex items-center border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-xl font-semibold hover:border-gray-400 hover:bg-gray-50 transition-all duration-300">
               View All Services
             </button>

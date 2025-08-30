@@ -18,35 +18,35 @@ const faqs: FAQItem[] = [
     {
         question: "How can I apply for admission to JU?",
         answer: "You can apply online through the official admission portal.",
-        link: "https://juniv.edu/admission",
+        link: "https://juniv.edu/",
         icon: <ExternalLink className="w-4 h-4" />,
         label: "Go to Admission Portal",
     },
     {
         question: "Where can I check admission notices?",
         answer: "All official admission notices are posted here.",
-        link: "https://juniv.edu/admission/notice",
+        link: "https://juniv.edu/discussion?event_id=4",
         icon: <Bell className="w-4 h-4" />,
         label: "View Notices",
     },
     {
         question: "How do I contact the JU admission office?",
         answer: "Visit the official contact page for phone numbers and email.",
-        link: "https://juniv.edu/contact",
+        link: "https://juniv.edu/page/contact-us",
         icon: <Phone className="w-4 h-4" />,
         label: "Contact JU",
     },
     {
         question: "Where can I see the academic calendar?",
         answer: "The academic calendar is available here.",
-        link: "https://juniv.edu/academic/calendar",
+        link: "https://juniv.edu/academic-calendar",
         icon: <Calendar className="w-4 h-4" />,
         label: "View Calendar",
     },
     {
         question: "Where can I find department details?",
         answer: "Browse all faculties and departments here.",
-        link: "https://juniv.edu/department",
+        link: "https://juniv.edu/",
         icon: <Book className="w-4 h-4" />,
         label: "Departments List",
     },
@@ -90,7 +90,12 @@ export default function QuickLinks() {
                     ))}
                 </div>
                 <div className=" mt-5 w-fit mx-auto">
-                    <Link to={"/"} className=" px-10 py-2 rounded-xl font-bold bg-purple-600 text-white  ">Home</Link>
+                    <Link
+                        to={"/"}
+                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+                    >
+                        Home
+                    </Link>
                 </div>
             </div>
         </div>

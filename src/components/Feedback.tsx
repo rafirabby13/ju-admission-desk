@@ -6,7 +6,8 @@ import { useGetAlFeedback } from "../hooks/useGetAllFeedback";
 import axios from "axios";
 import Swal from "sweetalert2";
 import SimpleNavbar from "./SimpleNavbar";
-import FeedbackCard, { type FeedbackCardProps } from "./Feedbackcard";
+import FeedbackCard from "./Feedbackcard";
+import { useGetAlMe } from "../hooks/useGetMe";
 
 interface FeedbackFormData {
     _id?: string,
@@ -32,7 +33,11 @@ export default function FeedbackModalPage() {
 
     const { data: feedbackList, refetch } = useGetAlFeedback();
 
-    console.log(feedbackList)
+    const { data: getUser } = useGetAlMe()
+
+
+
+    console.log(getUser)
 
 
     const handleChange = (
@@ -50,9 +55,15 @@ export default function FeedbackModalPage() {
         console.log(formData)
         setLoading(true);
         setStatus(null);
+        //https://farabis-admission-help-desk-server.vercel.app/feedback
+        const frontendUrl = import.meta.env.VITE_BACKEND_URL;
+
+        if (!frontendUrl) {
+            throw new Error("VITE_BACKEND_URL is not defined in .env");
+        }
 
         try {
-            const res = await axios.post("http://localhost:5000/feedback", formData);
+            const res = await axios.post(`${frontendUrl}/feedback`, formData);
 
             if (res.data.success) {
                 refetch()
@@ -82,29 +93,35 @@ export default function FeedbackModalPage() {
             <SimpleNavbar />
             <div className="max-w-4xl mx-auto py-12 px-4">
                 {/* Heading */}
-                <div className="flex justify-between items-center mb-6">
-                    <div className="flex items-center space-x-2">
-                        <MessageSquare className="w-6 h-6 text-blue-600" />
-                        <h1 className="text-2xl font-bold">Feedback</h1>
+                {
+                    getUser?.role !== "SUPER_ADMIN" &&
+                    <div className="flex justify-between items-center mb-6">
+                        <div className="flex items-center space-x-2">
+                            <MessageSquare className="w-6 h-6 text-blue-600" />
+                            <h1 className="text-2xl font-bold">Feedback</h1>
+                        </div>
+                        <button
+                            onClick={() => setModalOpen(true)}
+                            className="px-5 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-bold rounded-lg shadow-xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 ease-in-out"
+                        >
+                            Give Feedback
+                        </button>
                     </div>
-                    <button
-                        onClick={() => setModalOpen(true)}
-                        className="px-5 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-bold rounded-lg shadow-xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 ease-in-out"
-                    >
-                        Give Feedback
-                    </button>
-                </div>
+                }
 
                 {/* Feedback List */}
-                <div className="space-y-4">
+                {
+                    getUser?.role !== "USER" &&
+                    <div className="space-y-4">
 
-                    {
-                        feedbackList?.map(((feedback) => <FeedbackCard key={feedback._id} feedback={feedback} />))
-                    }
-                    {feedbackList.length === 0 && (
-                        <p className="text-gray-500 text-center">No feedback submitted yet.</p>
-                    )}
-                </div>
+                        {
+                            feedbackList?.map(((feedback) => <FeedbackCard key={feedback._id} feedback={feedback} />))
+                        }
+                        {feedbackList.length === 0 && (
+                            <p className="text-gray-500 text-center">No feedback submitted yet.</p>
+                        )}
+                    </div>
+                }
 
                 {/* Modal */}
                 {modalOpen && (

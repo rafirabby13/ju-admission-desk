@@ -1,13 +1,20 @@
 import { useState } from 'react';
 import {  ArrowRight, Users, Clock, Award, CheckCircle, MessageCircle } from 'lucide-react';
+import { Link } from 'react-router';
 
 const HeroSection = () => {
   const [isHovered, setIsHovered] = useState(false);
 
+
+  // const {data} = useGetAlllQAns()
+  // const {data:categories} = useGetAllcategories()
+
+  // console.log(categories)
+
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 overflow-hidden">
+    <section className="relative  bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-black opacity-20"></div>
+      <div className="absolute inset-0 bg-black opacity-20 "></div>
       <div className="absolute inset-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
         <div className="absolute top-40 right-20 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
@@ -15,7 +22,7 @@ const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-16">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen">
           
           {/* Left Column - Text Content */}
@@ -66,15 +73,15 @@ const HeroSection = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <button
+              <Link to={"/ask-ai"}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
               >
                 <MessageCircle className="w-5 h-5 mr-2" />
-                Start Chat with AI Assistant
+                Start Chat with AI 
                 <ArrowRight className={`w-5 h-5 ml-2 transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
-              </button>
+              </Link>
               
               <button className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-blue-400 border-2 border-blue-400/50 rounded-xl hover:bg-blue-400/10 hover:border-blue-400 transition-all duration-300">
                 Learn More About Services

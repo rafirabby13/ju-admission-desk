@@ -12,6 +12,7 @@ import {
   Zap,
   Search
 } from 'lucide-react';
+import { Link } from 'react-router';
 
 // Define the FAQ type interface
 interface FAQ {
@@ -218,9 +219,9 @@ const FAQSection = () => {
                 <p className="text-xs text-gray-600 mb-3">
                   Average response time: 2 seconds
                 </p>
-                <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 rounded-lg text-sm font-medium hover:shadow-lg transition-shadow">
+                <Link to={"/ask-ai"} className="w-full px-10 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 rounded-lg text-sm font-medium hover:shadow-lg transition-shadow">
                   Ask AI Now
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -291,10 +292,10 @@ const FAQSection = () => {
                     Get instant, personalized answers tailored to your situation.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button className="inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                    <Link to={"/ask-ai"} className="inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
                       <MessageSquare className="w-5 h-5 mr-2" />
                       Chat with AI Assistant
-                    </button>
+                    </Link>
                     <button className="inline-flex items-center border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:border-gray-400 hover:bg-gray-50 transition-all duration-300">
                       <Users className="w-5 h-5 mr-2" />
                       Contact Human Expert

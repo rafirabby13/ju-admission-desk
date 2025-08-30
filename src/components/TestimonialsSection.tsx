@@ -10,6 +10,7 @@ import {
   ArrowRight,
   GraduationCap
 } from 'lucide-react';
+import { Link } from 'react-router';
 
 const TestimonialsSection = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -297,11 +298,11 @@ const TestimonialsSection = () => {
             <p className="text-gray-600 mb-6">
               Join hundreds of successful students and get personalized guidance for your JU admission journey.
             </p>
-            <button className="group inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+            <Link to={"/ask-ai"} className="group inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
               <Users className="w-5 h-5 mr-2" />
               Get Started Today
               <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
-            </button>
+            </Link>
           </div>
         </div>
       </div>

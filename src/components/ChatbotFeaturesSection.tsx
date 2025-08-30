@@ -11,6 +11,7 @@ import {
   ArrowRight,
   Sparkles
 } from 'lucide-react';
+import { Link } from 'react-router';
 
 const ChatbotFeaturesSection = () => {
   const [activeFeature, setActiveFeature] = useState(0);
@@ -173,11 +174,11 @@ const ChatbotFeaturesSection = () => {
             
             {/* CTA Button */}
             <div className="pt-8">
-              <button className="group inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+              <Link to={"/ask-ai"} className="group inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
                 <MessageCircle className="w-5 h-5 mr-2" />
                 Try AI Assistant Now
                 <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
-              </button>
+              </Link>
             </div>
           </div>
 

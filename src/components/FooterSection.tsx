@@ -197,13 +197,13 @@ const FooterSection = () => {
                 <p className="text-gray-300 text-sm mb-4">
                   Get admission updates and tips directly to your inbox.
                 </p>
-                <div className="flex space-x-2">
+                <div className="flex flex-col gap-4 space-x-2">
                   <input
                     type="email"
                     placeholder="Your email"
                     className="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                   />
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
+                  <button className="bg-blue-600 w-fit hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
@@ -212,7 +212,7 @@ const FooterSection = () => {
           </div>
         </div>
 
-        {/* CTA Banner */}
+        {/* CTA Banner
         <div className="py-8 border-t border-gray-800">
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-center">
             <h3 className="text-2xl font-bold text-white mb-4">
@@ -232,7 +232,7 @@ const FooterSection = () => {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Bottom Bar */}
         <div className="py-8 border-t border-gray-800">
